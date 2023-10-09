@@ -1,0 +1,37 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+todos = []
+
+@app.route('/todos', methods=['POST'])
+def create_todo():
+    data = request.get_json()
+    if 'task' in data:
+        task = data['task']
+        todos.append(task)
+        return jsonify({'message': 'Todo created successfully'}), 201
+    else:
+        return jsonify({'error': 'Missing task parameter'}), 400
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+In this example, we define a Flask app with one route (/todos) that accepts POST requests for creating todos. When a POST request is made to this endpoint with a JSON payload containing a "task" field, it adds the task to the "todos" list and returns a JSON response indicating success. If the "task" field is missing, it returns a 400 Bad Request response.
+
+Remember to install Flask if you haven't already:
+
+
+pip install Flask
+
+
+You can test this endpoint by sending a POST request with a JSON payload like:
+
+
+{
+    "task": "Buy groceries"
+}
+
+
+This is a simple example, and you can expand upon it to include additional functionality such as listing, updating, or deleting todos as nee
